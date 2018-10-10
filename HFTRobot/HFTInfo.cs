@@ -103,8 +103,11 @@ namespace HFTRobot
             lastReStartTime = DateTime.Now;
             Open_Time = config.Open_Time ?? DateTime.Now;
             OrderQty = (int)(config.Open_PacketNum ?? 10);
-            this.Symbol = config.Symbol;
-            this.Open_SpanPrice =this.SpanPrice = config.Open_FloatAMT ?? 0.5m;
+            Symbol = config.Symbol;
+            Open_SpanPrice = SpanPrice = config.Open_FloatAMT ?? 0.5m;
+            Open_Fund = config.Open_Fund ?? 0;
+            Open_Price = config.Open_Price ?? 0;
+
             //orderList = new List<Order>();
             ResetTimes = new List<decimal>();
             ShockTimes = new List<decimal>();

@@ -1,4 +1,4 @@
-
+/*
 {
   "Platform": "FC",
   "User": "ZZ",
@@ -10,25 +10,25 @@
   "Open_Price": 0,
   "Open_FloatAMT": 0.2,
   "Open_PacketNum": 10.0,
-  "UseDataBase": true,
+  "UseDataBase": false,
   "Port": 51888,
   "PriceRate": 0,
   "TradeFee": 0,
   "CoinPairs": "btcusdt:2,bchusdt:0.5,ethusdt:0.2,ltcusdt:0.03,etcusdt:0.2,eosusdt:0.01",
   "TradeQty": 0
 }
+*/
 
-/*
 {
   "Platform": "FC",
   "User": "Ben",
   "ApiKey": "74f96c9428bc4b37a741904553b5b2aa",
   "SecretKey": "d0944a8ca44640ffbb9549c3cac56769",
   "Symbol": "btcusdt",
-  "Open_Time": null,
-  "Open_Fund": 0.0,
-  "Open_Price": 0.0,
-  "Open_FloatAMT": 1,
+  "Open_Time": "2018-09-27 11:15:14",
+  "Open_Fund": 650.08,
+  "Open_Price": 6499.32,
+  "Open_FloatAMT": 2,
   "Open_PacketNum": 10.0,
   "UseDataBase": true,
   "Port": 51888,
@@ -37,7 +37,7 @@
   "CoinPairs": "btcusdt:3,bchusdt:0.5,ethusdt:0.2,ltcusdt:0.03,etcusdt:0.2,eosusdt:0.01",
   "TradeQty": 0.0
 }
-*/
+
 /*
 {
 	"Platform": "FC",
