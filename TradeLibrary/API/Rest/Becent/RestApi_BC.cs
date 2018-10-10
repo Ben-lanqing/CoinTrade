@@ -190,7 +190,6 @@ namespace TradeLibrary.API.Rest
             {
                 throw e;
             }
-            return result;
         }
 
         /// <summary>
@@ -247,7 +246,6 @@ namespace TradeLibrary.API.Rest
             {
                 throw e;
             }
-            return result;
         }
 
         #region private

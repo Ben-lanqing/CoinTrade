@@ -93,7 +93,7 @@
           </Key>
           <Property Name="id" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
           <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="date" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="runningTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="OpenPrice" Type="Decimal" Precision="53" Scale="0" />
           <Property Name="TickerPrice" Type="Decimal" Precision="53" Scale="0" />

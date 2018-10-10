@@ -124,8 +124,6 @@ namespace TradeLibrary.API.Rest
                 Log4NetUtility.Error("trade", result);
                 throw e;
             }
-
-            return result;
         }
         public string cancel_order(string order_id)
         {
@@ -184,7 +182,6 @@ namespace TradeLibrary.API.Rest
                 Log4NetUtility.Error("order_info", result);
                 throw e;
             }
-            return result;
         }
 
         /// <summary>
@@ -243,7 +240,6 @@ namespace TradeLibrary.API.Rest
 
                 throw e;
             }
-            return result;
 
         }
 
