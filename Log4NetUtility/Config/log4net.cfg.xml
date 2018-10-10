@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net"/>
+  </configSections>
+
+  <!--日志记录组建配置-->
+  <log4net debug="true">
+    <!-- 调试日志配置 -->
+    <appender name="DebugAppender" type="log4net.Appender.DebugAppender">
+      <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="[%date][%thread][%-5level][%c] - %message%newline" />
+      </layout>
+    </appender>
+
+    <!-- 文件日志配置 -->
+    <appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+      <appendToFile value="true" />
+      <rollingStyle value="Date" />
+      <staticLogFileName value="false"/>
+      <maxSizeRollBackups value="-1" />
+      <datePattern value="yyyy-MM-dd_HH'.log'" />
+      <lockingModel value="log4net.Appender.FileAppender.MinimalLock" />
+      <file value="Log\\" />
+      <layout type="log4net.Layout.PatternLayout">
+        <!--<conversionPattern value="[%date][%thread][%-5level]%message%newline" />-->
+        <conversionPattern value="[%date]%message%newline" />
+      </layout>
+    </appender>
+    <appender name="ErrRollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+      <appendToFile value="true" />
+      <rollingStyle value="Date" />
+      <staticLogFileName value="false"/>
+      <maxSizeRollBackups value="-1" />
+      <datePattern value="yyyy-MM-dd_HH'.log'" />
+      <lockingModel value="log4net.Appender.FileAppender.MinimalLock" />
+      <file value="LogErr\\" />
+      <layout type="log4net.Layout.PatternLayout">
+        <!--<conversionPattern value="[%date][%thread][%-5level]%message%newline" />-->
+        <conversionPattern value="[%date]%message%newline" />
+      </layout>
+    </appender>
+
+    <appender name="ConsoleAppender"   type="log4net.Appender.ConsoleAppender" >
+      <layout type="log4net.Layout.PatternLayout">
+        <param name="ConversionPattern"  value="[%date]%message%newline" />
+      </layout>
+    </appender>
+
+    <!-- Setup the root category, add the appenders and set the default priority -->
+    <root>
+      <level value="ALL" />
+      <appender-ref ref="DebugAppender" />
+    </root>
+
+    <logger name="FileLogLogger" additivity="false">
+      <level value="ALL" />
+      <appender-ref ref="RollingLogFileAppender" />
+      <appender-ref ref="ConsoleAppender" />
+    </logger>
+      <logger name="ErrFileLogLogger" additivity="false">
+      <level value="ALL" />
+      <appender-ref ref="ErrRollingLogFileAppender" />
+      <appender-ref ref="ConsoleAppender" />
+    </logger>
+  </log4net>
+</configuration>

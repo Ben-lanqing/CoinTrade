@@ -1,0 +1,68 @@
+
+{
+  "Platform": "FC",
+  "User": "ZZ",
+  "ApiKey": "5e5f8554a24843bd85d3eb01c2ff9fe7",
+  "SecretKey": "7d4cd9142bfd4090b35e7c542b6f3eb0",
+  "Symbol": "ethusdt",
+  "Open_Time": null,
+  "Open_Fund": 0,
+  "Open_Price": 0,
+  "Open_FloatAMT": 0.2,
+  "Open_PacketNum": 10.0,
+  "UseDataBase": true,
+  "Port": 51888,
+  "PriceRate": 0,
+  "TradeFee": 0,
+  "CoinPairs": "btcusdt:2,bchusdt:0.5,ethusdt:0.2,ltcusdt:0.03,etcusdt:0.2,eosusdt:0.01",
+  "TradeQty": 0
+}
+
+/*
+{
+  "Platform": "FC",
+  "User": "Ben",
+  "ApiKey": "74f96c9428bc4b37a741904553b5b2aa",
+  "SecretKey": "d0944a8ca44640ffbb9549c3cac56769",
+  "Symbol": "btcusdt",
+  "Open_Time": null,
+  "Open_Fund": 0.0,
+  "Open_Price": 0.0,
+  "Open_FloatAMT": 1,
+  "Open_PacketNum": 10.0,
+  "UseDataBase": true,
+  "Port": 51888,
+  "PriceRate": 0,
+  "TradeFee": 0,
+  "CoinPairs": "btcusdt:3,bchusdt:0.5,ethusdt:0.2,ltcusdt:0.03,etcusdt:0.2,eosusdt:0.01",
+  "TradeQty": 0.0
+}
+*/
+/*
+{
+	"Platform": "FC",
+	"User": "Jo",
+	"ApiKey": "02dfdf31cf7b4f05b5ed5d90d132c8f8",
+	"SecretKey": "6bb1c22fefe645debf5fe7e584951775",
+	"Symbol": "ethusdt",
+	"Open_Time": "2018/8/16 16:00:00",
+	//"Open_Time": null,
+	"Open_Fund": 0.0,
+	"Open_Price": 0.0,
+	"Open_FloatAMT": 0.2,
+	"Open_PacketNum": 10.0,
+	"UseDataBase": false,
+	"Port": 51888,
+	"PriceRate": 0,
+	"TradeFee": 0,
+	"CoinPairs": "btcusdt:3,bchusdt:0.5,ethusdt:0.2,ltcusdt:0.03,etcusdt:0.2,eosusdt:0.01",
+	"TradeQty": 0.005,
+	"TriOpenRate": 0.003,
+	//"TrianglePairs": "eth:btc:usdt,etc:btc:usdt,etc:eth:usdt"
+	"TrianglePairs": "eth:btc:usdt,etc:btc:usdt,etc:eth:usdt",
+	"IsTest": false
+}
+*/
+
+
+

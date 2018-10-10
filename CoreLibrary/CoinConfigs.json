@@ -1,0 +1,145 @@
+[
+	/* ft */
+	{
+		"Platform": "FC",
+		"Title": "ftusdt",
+		"Symbol": "ftusdt",
+		"CoinA": "ft",
+		"CoinB": "usdt",
+		"AmountLimit": 1,
+		"PriceLimit": 1000000,
+		"BasePriceWidth": 0.1
+	},
+	{
+		"Platform": "FC",
+		"Title": "fteth",
+		"Symbol": "fteth",
+		"CoinA": "ft",
+		"CoinB": "eth",
+		"AmountLimit": 1,
+		"PriceLimit": 100000000,
+		"BasePriceWidth": 0.1
+	},
+	{
+		"Platform": "FC",
+		"Title": "ftbtc",
+		"Symbol": "ftbtc",
+		"CoinA": "ft",
+		"CoinB": "btc",
+		"AmountLimit": 1,
+		"PriceLimit": 100000000,
+		"BasePriceWidth": 0.1
+	},
+	/* usdt */
+	{
+		"Platform": "FC",
+		"Title": "btcusdt",
+		"Symbol": "btcusdt",
+		"CoinA": "btc",
+		"CoinB": "usdt",
+		"AmountLimit": 1000,
+		"PriceLimit": 100,
+		"BasePriceWidth": 0.1
+	},
+	{
+		"Platform": "FC",
+		"Title": "ethusdt",
+		"Symbol": "ethusdt",
+		"CoinA": "eth",
+		"CoinB": "usdt",
+		"AmountLimit": 1000,
+		"PriceLimit": 100,
+		"BasePriceWidth": 0.1
+	},
+	{
+		"Platform": "FC",
+		"Title": "bchusdt",
+		"Symbol": "bchusdt",
+		"CoinA": "bch",
+		"CoinB": "usdt",
+		"AmountLimit": 1000,
+		"PriceLimit": 100,
+		"BasePriceWidth": 0.1
+	},
+	{
+		"Platform": "FC",
+		"Title": "ltcusdt",
+		"Symbol": "ltcusdt",
+		"CoinA": "ltc",
+		"CoinB": "usdt",
+		"AmountLimit": 1000,
+		"PriceLimit": 100,
+		"BasePriceWidth": 0.1
+	},
+	{
+		"Platform": "FC",
+		"Title": "etcusdt",
+		"Symbol": "etcusdt",
+		"CoinA": "etc",
+		"CoinB": "usdt",
+		"AmountLimit": 1000,
+		"PriceLimit": 100,
+		"BasePriceWidth": 0.1
+	},
+	/* btc */
+	{
+		"Platform": "FC",
+		"Title": "ethbtc",
+		"Symbol": "ethbtc",
+		"CoinA": "eth",
+		"CoinB": "btc",
+		"AmountLimit": 1000,
+		"PriceLimit": 1000000,
+		"BasePriceWidth": 0.1
+	},
+	{
+		"Platform": "FC",
+		"Title": "bchbtc",
+		"Symbol": "bchbtc",
+		"CoinA": "bch",
+		"CoinB": "btc",
+		"AmountLimit": 1000,
+		"PriceLimit": 1000000,
+		"BasePriceWidth": 0.1
+	},
+	{
+		"Platform": "FC",
+		"Title": "ltcbtc",
+		"Symbol": "ltcbtc",
+		"CoinA": "ltc",
+		"CoinB": "btc",
+		"AmountLimit": 1000,
+		"PriceLimit": 1000000,
+		"BasePriceWidth": 0.1
+	},
+	{
+		"Platform": "FC",
+		"Title": "etcbtc",
+		"Symbol": "etcbtc",
+		"CoinA": "etc",
+		"CoinB": "btc",
+		"AmountLimit": 1000,
+		"PriceLimit": 1000000,
+		"BasePriceWidth": 0.1
+	},
+	/* eth */
+	{
+		"Platform": "FC",
+		"Title": "etceth",
+		"Symbol": "etceth",
+		"CoinA": "etc",
+		"CoinB": "eth",
+		"AmountLimit": 1000,
+		"PriceLimit": 1000000,
+		"BasePriceWidth": 0.1
+	},
+	{
+		"Platform": "FC",
+		"Title": "ltceth",
+		"Symbol": "ltceth",
+		"CoinA": "ltc",
+		"CoinB": "eth",
+		"AmountLimit": 1000,
+		"PriceLimit": 1000000
+	}
+]
