@@ -70,7 +70,7 @@ namespace HFTRobot
             Platform = config.Platform;
             robotMarket = new Robot_Market(Platform);
             robotTrade = new Robot_Trade(coinConfigs, config, Platform, config.ApiKey, config.SecretKey, new List<string>() { Symbol });
-            robotSession = new Robot_Session(robotTrade,robotMarket, info);
+            robotSession = new Robot_Session(robotTrade, robotMarket, info);
             robotSession.SessionEvent += RobotHFT_SessionEvent;
             robotCurrent = new Robot_Current(robotTrade, robotSession, info);
             robotCurrent.CurrentEvent += RobotHFT_CurrentEvent; ;
@@ -770,8 +770,8 @@ namespace HFTRobot
             var kline1 = robotMarket.GetKlines(Symbol, kr1) ?? new List<Kline>();
             var kline2 = robotMarket.GetKlines(Symbol, kr2) ?? new List<Kline>();
 
-            decimal width1 = GetKlinePriceWidth(kline1, info.OrderQty, format, 5, 0.5m);
-            decimal width15 = GetKlinePriceWidth(kline2, info.OrderQty, format, 5, 0.2m);
+            decimal width1 = GetKlinePriceWidth(kline1, info.OrderQty, format, 5, 1.5m);
+            decimal width15 = GetKlinePriceWidth(kline2, info.OrderQty, format, 5, 1.0m);
 
             decimal width = Math.Max(width1, width15);
 
@@ -780,8 +780,8 @@ namespace HFTRobot
                 if (info.Symbol.ToLower().Contains("btcusdt") && width <= 1m)
                     width = 1;
                 info.SpanPrice = width;
-                Log4NetUtility.Debug($"kline{kr1} width : {width1}  kline{kr2} width : {width15} SpanPrice:{info.SpanPrice}->{width}");
             }
+            Log4NetUtility.Debug($"kline{kr1} width : {width1}  kline{kr2} width : {width15} SpanPrice:{info.SpanPrice}->{width}");
             return info.SpanPrice;
         }
 
