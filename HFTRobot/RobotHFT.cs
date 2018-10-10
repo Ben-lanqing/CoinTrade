@@ -770,8 +770,8 @@ namespace HFTRobot
             var kline1 = robotMarket.GetKlines(Symbol, kr1) ?? new List<Kline>();
             var kline2 = robotMarket.GetKlines(Symbol, kr2) ?? new List<Kline>();
 
-            decimal width1 = GetKlinePriceWidth(kline1, info.OrderQty, format, 5, 1.5m);
-            decimal width15 = GetKlinePriceWidth(kline2, info.OrderQty, format, 5, 1.0m);
+            decimal width1 = GetKlinePriceWidth(kline1, info.OrderQty, format, 5, 1.0m);
+            decimal width15 = GetKlinePriceWidth(kline2, info.OrderQty, format, 5, 0.5m);
 
             decimal width = Math.Max(width1, width15);
 
