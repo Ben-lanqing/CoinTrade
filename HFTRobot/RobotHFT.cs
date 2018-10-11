@@ -368,7 +368,7 @@ namespace HFTRobot
                             CurrentDirtyOrders(dirtyOrders);
                         break;
                     case CurrentEventType.LittleTrade:
-                        ReSetOrder();
+                        ReSetOrder(true);
                         break;
                 }
             }
@@ -464,7 +464,7 @@ namespace HFTRobot
         /// <summary>
         /// 全量平仓
         /// </summary>
-        private void ReSetOrder()
+        private void ReSetOrder(bool isParaReset = false)
         {
             try
             {
@@ -476,9 +476,12 @@ namespace HFTRobot
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
                 Log4NetUtility.Info("SessionEvent", "************************* 全量平仓<开始> ************************");
-                info.resetCount++;
-                info.lastReStartTime = DateTime.Now;
-                info.ResetTimes.Add(Utils.GetUtcTimeDec());
+                if (!isParaReset)
+                {
+                    info.resetCount++;
+                    info.lastReStartTime = DateTime.Now;
+                    info.ResetTimes.Add(Utils.GetUtcTimeDec());
+                }
                 //CheckTroppoReset(info.ResetTimes, info.ShockTimes, info.lastReStartTime);
 
 
