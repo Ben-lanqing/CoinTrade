@@ -25,7 +25,7 @@ namespace MarketLibrary.Model
             type = depth.type;
             bids = new List<decimal[]>();
             asks = new List<decimal[]>();
-            if (depth == null || depth.bids == null) return;
+            if (depth == null || depth.asks == null || depth.bids == null) return;
             int bidsPairCount = depth.bids.Count / 2;
             int asksPairCount = depth.asks.Count / 2;
             for (int i = 0; i < bidsPairCount; i++)
@@ -35,6 +35,23 @@ namespace MarketLibrary.Model
             for (int i = 0; i < asksPairCount; i++)
             {
                 asks?.Add(new decimal[] { depth.asks[i * 2], depth.asks[i * 2 + 1] });
+            }
+        }
+        public Depth(API.Rest.FCoin.depth depth)
+        {
+            type = depth.type;
+            bids = new List<decimal[]>();
+            asks = new List<decimal[]>();
+            if (depth == null || depth.data.asks == null) return;
+            int bidsPairCount = depth.data.bids.Count / 2;
+            int asksPairCount = depth.data.asks.Count / 2;
+            for (int i = 0; i < bidsPairCount; i++)
+            {
+                bids?.Add(new decimal[] { depth.data.bids[i * 2], depth.data.bids[i * 2 + 1] });
+            }
+            for (int i = 0; i < asksPairCount; i++)
+            {
+                asks?.Add(new decimal[] { depth.data.asks[i * 2], depth.data.asks[i * 2 + 1] });
             }
         }
     }

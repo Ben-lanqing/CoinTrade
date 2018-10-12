@@ -144,6 +144,40 @@ namespace MarketLibrary
             return Kline.Klines(data, type);
 
         }
+        public Depth GetDepth(string platform, string symbol)
+        {
+            try
+            {
+                switch (platform)
+                {
+                    //case "OK":
+                    //    return GetTicker_OK(symbol);
+                    //case "BA":
+                    //    return GetDepth_BA(symbol, size);
+                    case "HB":
+                    //return GetTicker_OK(symbol);
+                    case "FC":
+                        return GetDepth_FC(symbol);
+                    default:
+                        return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Log4NetUtility.Error("GetDepth", Utils.Exception2String(e));
+                DbHelper.CreateInstance().AddError("GetDepth", e);
+                return null;
+
+            }
+        }
+        public Depth GetDepth_FC(string symbol)
+        {
+            string JsonStr = getRequest_FC.depht(symbol);
+            var data = ModelHelper<API.Rest.FCoin.depth>.Json2Model(JsonStr);
+            return new Depth(data);
+
+        }
+
         public void DepthSub(string symbol)
         {
             string topic = $"depth.L150.{symbol}";

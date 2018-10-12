@@ -24,6 +24,7 @@ namespace MarketRobot
         MarketHepler marketHepler;
 
         Timer tickerTimer;
+        Timer depthTimer;
         Timer heplerTimer;
 
 
@@ -46,6 +47,8 @@ namespace MarketRobot
             // 初始化系统计时器配置
             tickerTimer = new System.Timers.Timer(1000);
             tickerTimer.Elapsed += TickerTimer_Elapsed;
+            depthTimer = new System.Timers.Timer(1000 * 60);
+            depthTimer.Elapsed += DepthTimer_Elapsed; ;
             heplerTimer = new System.Timers.Timer(1000 * 60 * 5);
             heplerTimer.Elapsed += HeplerTimer_Elapsed; ;
         }
@@ -88,6 +91,7 @@ namespace MarketRobot
                     if (depth != null && !string.IsNullOrEmpty(depth.type))
                     {
                         string symbol = depth.type.Replace("depth.L150.", "");
+                        symbol = symbol.Replace("depth.full.", "");
 
                         updateDepth(symbol, depth);
                     }
@@ -130,7 +134,58 @@ namespace MarketRobot
         {
             try
             {
-                Depthdic[symbol] = depth;
+                Depth oldDepth = Depthdic[symbol];
+                if (oldDepth.asks.Count == 0)
+                {
+                    oldDepth.asks.AddRange(depth.asks);
+                }
+                else
+                {
+                    var list = new List<decimal[]>();
+                    Parallel.ForEach(depth.asks, ask =>
+                    {
+                        var item = oldDepth.asks.FirstOrDefault(a => a[0] == ask[0]);
+                        if (item != null)
+                        {
+                            item[1] = ask[1];
+                        }
+                        else
+                        {
+                            list.Add(ask);
+                        }
+                    });
+                    oldDepth.asks.AddRange(list);
+                    var max = oldDepth.asks.FirstOrDefault()[0] * 1.2m;
+                    oldDepth.asks.RemoveAll(a => a[1] == 0 || a[0] > max);
+                    oldDepth.asks = oldDepth.asks.OrderBy(a => a[0]).ToList();
+
+                }
+
+                if (oldDepth.bids.Count == 0)
+                {
+                    oldDepth.bids.AddRange(depth.bids);
+                }
+                else
+                {
+                    var list = new List<decimal[]>();
+                    Parallel.ForEach(depth.bids, bid =>
+                    {
+                        var item = oldDepth.bids.FirstOrDefault(a => a[0] == bid[0]);
+                        if (item != null)
+                        {
+                            item[1] = bid[1];
+                        }
+                        else
+                        {
+                            list.Add(bid);
+                        }
+                    });
+                    oldDepth.bids.AddRange(list);
+                    var min = oldDepth.bids.FirstOrDefault()[0] * 0.8m;
+                    oldDepth.bids.RemoveAll(a => a[1] == 0 || a[0] < min);
+                    oldDepth.bids = oldDepth.bids.OrderByDescending(a => a[0]).ToList();
+
+                }
             }
             catch (Exception e)
             {
@@ -173,6 +228,19 @@ namespace MarketRobot
                 }
             });
         }
+        private void DepthTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Parallel.ForEach(Depthdic, (dic, lookup) =>
+            {
+                Depth depth = marketHepler?.GetDepth(platform, dic.Key);
+                if (depth != null && depth.result)
+                {
+                    updateDepth(dic.Key, depth);
+                }
+            });
+
+        }
+
         private void HeplerTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             try
@@ -198,15 +266,16 @@ namespace MarketRobot
         {
             SymbolList = symbols;
             IsWS = isWS;
-            foreach (var sy in symbols)
+            foreach (var symbol in symbols)
             {
-                var ticker = marketHepler.GetTicker(platform, sy);
-                Tickerdic.Add(sy, ticker);
-                Depthdic.Add(sy, null);
-                var KlineM1 = marketHepler.GetKline(platform, sy, "M1");
-                var KlineM15 = marketHepler.GetKline(platform, sy, "M15");
-                Klinedic.Add("M1." + sy, KlineM1);
-                Klinedic.Add("M15." + sy, KlineM15);
+                var ticker = marketHepler.GetTicker(platform, symbol);
+                var depth = marketHepler.GetDepth(platform, symbol);
+                Tickerdic.Add(symbol, ticker);
+                Depthdic.Add(symbol, depth);
+                var KlineM1 = marketHepler.GetKline(platform, symbol, "M1");
+                var KlineM15 = marketHepler.GetKline(platform, symbol, "M15");
+                Klinedic.Add("M1." + symbol, KlineM1);
+                Klinedic.Add("M15." + symbol, KlineM15);
             }
             if (isWS)
             {
@@ -217,13 +286,17 @@ namespace MarketRobot
             else
             {
                 tickerTimer.Start();
+                depthTimer.Start();
+
             }
+            depthTimer.Start();
             Running = true;
         }
         public void Stop()
         {
             Running = false;
             tickerTimer.Stop();
+            depthTimer.Stop();
         }
 
         public void DepthSubscribe(List<string> symbols)

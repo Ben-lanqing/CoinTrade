@@ -30,6 +30,7 @@ namespace MarketLibrary.API.Rest
         /// </summary>
         private const string TICKER_URL = "/v2/market/ticker/";
         private const string CANDLES_URL = "/v2/market/candles/";
+        private const string DEPTH_URL = "/v2/market/depth/";
 
         public RestApi_FC(string url_prex, string api_key, string secret_key)
         {
@@ -59,14 +60,31 @@ namespace MarketLibrary.API.Rest
             }
             return result;
         }
-        public string candles(string symbol, string resolution,int limit)
+        public string depht(string symbol, string level = "full")
+        {
+            string result = "";
+            try
+            {
+                HttpUtilManager httpUtil = HttpUtilManager.getInstance();
+                string url = $"{DEPTH_URL}/{level}/{symbol}";
+                result = httpUtil.requestHttpGet(url_prex, url, "");
+            }
+            catch (Exception e)
+            {
+                Log4NetUtility.Error("RestApi_FC", result);
+
+                throw e;
+            }
+            return result;
+        }
+        public string candles(string symbol, string resolution, int limit)
         {
             string result = "";
             try
             {
                 HttpUtilManager httpUtil = HttpUtilManager.getInstance();
                 string url = $"{CANDLES_URL}/{resolution}/{symbol}";
-                result = httpUtil.requestHttpGet(url_prex, url, "limit = "+ limit);
+                result = httpUtil.requestHttpGet(url_prex, url, "limit = " + limit);
             }
             catch (Exception e)
             {

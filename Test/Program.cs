@@ -16,21 +16,6 @@ namespace Test
         //static Robot_Market robot = new Robot_Market("FC");
         static void Main(string[] args)
         {
-            DateTime openTime = new DateTime(2018,09,27,11,15,14);
-            var orders = DbHelper.CreateInstance().GetDBOrders(openTime);
-            var buyorders = orders.Where(a => a.side == "buy");
-            var sellorders = orders.Where(a => a.side == "sell");
-
-            decimal buyFund = buyorders.Sum(a => a.amount ?? 0 * a.price ?? 0);
-            decimal sellFund = sellorders.Sum(a => a.amount ?? 0 * a.price ?? 0);
-
-            var earnT = sellFund - buyFund;
-            decimal buyfees = buyorders.Sum(a => a.fees ?? 0);
-            decimal sellfees = sellorders.Sum(a => a.fees ?? 0);
-            var fees = buyfees * 6601.89m + sellfees;
-            decimal total = earnT - fees;
-            decimal rate = total / 678.86m;
-
             //using (var db = new TradeDBEntities())
             //{
             //    //db.orders.Add(new order() { orderid = 12345678, platform = "FC", price = 7000 });

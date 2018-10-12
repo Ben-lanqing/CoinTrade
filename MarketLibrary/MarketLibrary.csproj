@@ -51,6 +51,7 @@
     <Compile Include="API\Rest\Becent\RestApi_BC.cs" />
     <Compile Include="API\Rest\Becent\ticker.cs" />
     <Compile Include="API\Rest\FCoin\candle.cs" />
+    <Compile Include="API\Rest\FCoin\depth.cs" />
     <Compile Include="API\Rest\FCoin\RestApi_FC.cs" />
     <Compile Include="API\Rest\FCoin\ticker.cs" />
     <Compile Include="API\WebSocket\FCoin\candle_ws.cs" />

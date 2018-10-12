@@ -49,11 +49,12 @@ namespace MarketLibrary.API.WebSocket
             {
                 websocket = new WebSocketSharp.WebSocket(FC_WEBSOCKET_API);
 
-                websocket.OnError += (sender, e) =>
-                {
-                    Console.WriteLine("Error:" + e.Exception.Message.ToString());
-                    Log4NetUtility.Debug("OnError", e.Exception.Message);
-                };
+                //websocket.OnError += (sender, e) =>
+                //{
+                //    Console.WriteLine("Error:" + e.Exception.Message.ToString());
+                //    Log4NetUtility.Debug("OnError", e.Exception.Message);
+                //};
+                websocket.OnError += Websocket_OnError;
                 websocket.OnOpen += OnOpened;
                 websocket.OnClose += Websocket_Closed; ;
                 websocket.OnMessage += ReceviedMsg;
@@ -75,6 +76,9 @@ namespace MarketLibrary.API.WebSocket
             }
             return true;
         }
+
+
+
         public bool ReConnnet()
         {
             try
@@ -116,14 +120,22 @@ namespace MarketLibrary.API.WebSocket
             var msg = "{\"cmd\":\"ping\",\"args\":[" + timespan + "]}";
             SendSubscribeTopic(msg);
         }
+        private void Websocket_OnError(object sender, ErrorEventArgs e)
+        {
+            Console.WriteLine("Error:" + e.Exception.Message.ToString());
+            Console.WriteLine("websocket.IsAlive:" + websocket.IsAlive);
+            Log4NetUtility.Debug("OnError", "websocket.IsAlive:" + websocket.IsAlive);
+            Log4NetUtility.Debug("OnError", e.Exception.Message);
+            websocket.Close();
 
+        }
         private void Websocket_Closed(object sender, EventArgs e)
         {
             isOpened = false;
 
             //heartBeatTimer.Close();
             //Console.WriteLine($"Websocket_Closed");
-            //OnClosed?.Invoke(null, null);
+            OnClosed?.Invoke(null, null);
             //websocket.ConnectAsync();
             //countConnect++;
             //while (!websocket.IsAlive)
@@ -149,6 +161,7 @@ namespace MarketLibrary.API.WebSocket
             }
             heartBeatTimer.Start();
         }
+
 
         /// <summary>
         /// 响应心跳包&接收消息
