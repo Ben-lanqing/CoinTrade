@@ -204,10 +204,13 @@ namespace MarketLibrary.API.WebSocket
         }
         private void SendSubscribeTopic(string msg)
         {
-            websocket.Send(msg);
-            if (!msg.Contains("ping"))
+            if (isOpened)
             {
-                Console.WriteLine(msg);
+                websocket.Send(msg);
+                if (!msg.Contains("ping"))
+                {
+                    Console.WriteLine(msg);
+                }
             }
         }
 

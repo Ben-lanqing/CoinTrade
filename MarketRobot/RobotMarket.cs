@@ -63,6 +63,8 @@ namespace MarketRobot
         private void MarketHepler_OnClosed(object sender, EventArgs e)
         {
             Console.WriteLine($"FCMarket_OnClosed-");
+            Stop();
+            Run(SymbolList,IsWS);
         }
         private void MarketHepler_OnMessage(object sender, MarketLibrary.API.WebSocket.FCMessageReceivedEventArgs e)
         {
@@ -155,7 +157,7 @@ namespace MarketRobot
                         }
                     });
                     oldDepth.asks.AddRange(list);
-                    var max = oldDepth.asks.FirstOrDefault()[0] * 1.2m;
+                    var max = oldDepth.asks.FirstOrDefault()[0] * 1.1m;
                     oldDepth.asks.RemoveAll(a => a[1] == 0 || a[0] > max);
                     oldDepth.asks = oldDepth.asks.OrderBy(a => a[0]).ToList();
 
@@ -181,7 +183,7 @@ namespace MarketRobot
                         }
                     });
                     oldDepth.bids.AddRange(list);
-                    var min = oldDepth.bids.FirstOrDefault()[0] * 0.8m;
+                    var min = oldDepth.bids.FirstOrDefault()[0] * 0.9m;
                     oldDepth.bids.RemoveAll(a => a[1] == 0 || a[0] < min);
                     oldDepth.bids = oldDepth.bids.OrderByDescending(a => a[0]).ToList();
 
