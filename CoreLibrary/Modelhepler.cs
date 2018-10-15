@@ -40,6 +40,21 @@ namespace CoreLibrary
                 return default(T);
             }
         }
+        public static string Model2Json(T model)
+        {
+            try
+            {
+                return JsonConvert.SerializeObject(model);
+            }
+            catch (Exception e)
+            {
+                Log4NetUtility.Error("ModelHelper", Utils.Exception2String(e));
+                //Log4NetUtility.Error("ModelHelper", str);
+                DbHelper.CreateInstance().AddError("ModelHelper", e);
+                return "";
+            }
+        }
+
         public static List<T> CloneList(object List)
         {
             using (Stream objectStream = new MemoryStream())

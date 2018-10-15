@@ -31,15 +31,18 @@ namespace MarketLibrary.Model
             for (int i = 0; i < bidsPairCount; i++)
             {
                 bids?.Add(new decimal[] { depth.bids[i * 2], depth.bids[i * 2 + 1] });
+                result = true;
             }
             for (int i = 0; i < asksPairCount; i++)
             {
                 asks?.Add(new decimal[] { depth.asks[i * 2], depth.asks[i * 2 + 1] });
+                result = true;
             }
         }
         public Depth(API.Rest.FCoin.depth depth)
         {
             type = depth.type;
+            result = depth.status == 0;
             bids = new List<decimal[]>();
             asks = new List<decimal[]>();
             if (depth == null || depth.data.asks == null) return;

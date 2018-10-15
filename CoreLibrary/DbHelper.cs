@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lq.Log4Net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -153,6 +154,22 @@ namespace CoreLibrary.DB
             catch (Exception e)
             {
                 throw (e);
+
+            }
+        }
+        public void AddDepth(depth depth)
+        {
+            try
+            {
+                using (var db = new MarkeDBEntities())
+                {
+                    db.depth.Add(depth);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                Log4NetUtility.Error("AddDepth", e.Message);
 
             }
         }

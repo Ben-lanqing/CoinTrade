@@ -100,8 +100,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CoinTradeDBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DB\depth.cs">
+      <DependentUpon>MarketDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\error.cs">
       <DependentUpon>CoinTradeDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\MarketDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarketDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\MarketDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarketDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\MarketDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarketDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="DB\order.cs">
       <DependentUpon>CoinTradeDBModel.tt</DependentUpon>
@@ -127,6 +145,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CoinTradeDBModel.edmx</DependentUpon>
       <LastGenOutput>CoinTradeDBModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\MarketDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MarketDataModel.edmx</DependentUpon>
+      <LastGenOutput>MarketDataModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\MarketDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MarketDataModel.edmx</DependentUpon>
+      <LastGenOutput>MarketDataModel.cs</LastGenOutput>
     </Content>
     <Content Include="Newtonsoft.Json.dll" />
   </ItemGroup>
@@ -157,6 +185,16 @@
     </EntityDeploy>
     <None Include="DB\CoinTradeDBModel.edmx.diagram">
       <DependentUpon>CoinTradeDBModel.edmx</DependentUpon>
+    </None>
+    <None Include="DB\MarkeDB.sqlite">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <EntityDeploy Include="DB\MarketDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MarketDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DB\MarketDataModel.edmx.diagram">
+      <DependentUpon>MarketDataModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

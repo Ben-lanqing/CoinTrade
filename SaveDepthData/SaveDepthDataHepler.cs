@@ -1,6 +1,8 @@
-﻿using CoreLibrary.DB;
+﻿using CoreLibrary;
+using CoreLibrary.DB;
 using CoreLibrary.Model;
 using Lq.Log4Net;
+using MarketLibrary.Model;
 using MarketRobot;
 using System;
 using System.Collections.Generic;
@@ -40,14 +42,20 @@ namespace SaveDepthData
                 try
                 {
                     Thread.Sleep(1000 * 10);
-
+                    if (!robotMarket.Running)
+                        continue;
                     var depth = robotMarket.GetDepth("btcusdt");
                     var ticker = robotMarket.GetTicker("btcusdt");
                     #region
 
+                    depth item = new depth();
 
-
-                    //DbHelper.CreateInstance().AddReport(report);
+                    item.date = DateTime.Now;
+                    item.id = Utils.GetUtcTimeDec();
+                    item.ticker = ticker?.last;
+                    item.json = ModelHelper<Depth>.Model2Json(depth); ;
+                    if (item.ticker != 0 && !string.IsNullOrEmpty(item.json))
+                        DbHelper.CreateInstance().AddDepth(item);
 
                     #endregion
                     StringBuilder sb = new StringBuilder();
