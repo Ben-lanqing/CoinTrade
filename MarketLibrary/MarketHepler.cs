@@ -64,11 +64,11 @@ namespace MarketLibrary
 
         private void WsApi_FC_OnClosed(object sender, EventArgs e)
         {
-            Console.WriteLine($"FCMarket_OnClosed-");
-            OnClosed?.Invoke(null, null);
-            wsApi_FC.ReConnnet();
-            wsApi_FC.OnMessage += WsApi_FC_OnMessage;
-            wsApi_FC.OnClosed += WsApi_FC_OnClosed;
+            //Console.WriteLine($"FCMarket_OnClosed-");
+            //OnClosed?.Invoke(null, null);
+            //wsApi_FC.ReConnnet();
+            //wsApi_FC.OnMessage += WsApi_FC_OnMessage;
+            //wsApi_FC.OnClosed += WsApi_FC_OnClosed;
 
         }
         private void WsApi_FC_OnMessage(object sender, FCMessageReceivedEventArgs e)

@@ -41,7 +41,7 @@ namespace SaveDepthData
             {
                 try
                 {
-                    Thread.Sleep(1000 * 10);
+                    Thread.Sleep(1000 * 30);
                     if (!robotMarket.Running)
                         continue;
                     var depth = robotMarket.GetDepth("btcusdt");
@@ -118,7 +118,7 @@ namespace SaveDepthData
                 }
                 catch (Exception e)
                 {
-                    Log4NetUtility.Error("", e.Message);
+                    Log4NetUtility.Error("while", e.Message);
                 }
             }
         }

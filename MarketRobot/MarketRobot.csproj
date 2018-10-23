@@ -48,6 +48,10 @@
       <Project>{F6DA90C8-22F6-41CE-AB96-EF61883E2CC1}</Project>
       <Name>CoreLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Log4NetUtility\Log4NetUtility.csproj">
+      <Project>{59807081-A893-4816-A00E-912941A1536C}</Project>
+      <Name>Log4NetUtility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarketLibrary\MarketLibrary.csproj">
       <Project>{CED67666-9D8E-4F16-AA39-E05253574243}</Project>
       <Name>MarketLibrary</Name>

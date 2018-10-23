@@ -21,6 +21,11 @@ namespace MarketLibrary.API.Rest.FCoin
         public decimal ts { set; get; }
         public string type { set; get; }
         public string version { set; get; }
+        public depthData()
+        {
+            bids = new List<decimal>();
+            asks = new List<decimal>();
+        }
 
     }
 }

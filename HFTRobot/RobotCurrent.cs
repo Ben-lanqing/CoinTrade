@@ -103,7 +103,7 @@ namespace HFTRobot
                 catch (Exception e)
                 {
                     ////DbHelper.CreateInstance().AddErrInfo("DoPlan", e);
-                    Log4NetUtility.Error("", Utils.Exception2String(e));
+                    Log4NetUtility.Error("DoPlan", Utils.Exception2String(e));
                     DbHelper.CreateInstance().AddError("DoPlan", e);
                 }
                 finally

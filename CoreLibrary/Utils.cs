@@ -93,6 +93,8 @@ namespace CoreLibrary
             {
                 sb.AppendLine($"Message:{ex.Message}");
                 sb.AppendLine($"StackTrace:{ex.StackTrace}");
+                sb.AppendLine("------------------------------");
+
                 ex = ex.InnerException;
             }
             sb.AppendLine("================================");

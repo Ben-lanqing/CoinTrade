@@ -13,6 +13,10 @@ namespace MarketLibrary.API.WebSocket.FCoin
         public decimal seq { set; get; }
         public decimal ts { set; get; }
         public string type { set; get; }
-
+        public depth_ws()
+        {
+            bids = new List<decimal>();
+            asks = new List<decimal>();
+        }
     }
 }

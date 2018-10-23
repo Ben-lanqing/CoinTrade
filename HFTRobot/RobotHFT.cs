@@ -479,9 +479,9 @@ namespace HFTRobot
                 if (!isParaReset)
                 {
                     info.resetCount++;
-                    info.lastReStartTime = DateTime.Now;
-                    info.ResetTimes.Add(Utils.GetUtcTimeDec());
                 }
+                info.lastReStartTime = DateTime.Now;
+                info.ResetTimes.Add(Utils.GetUtcTimeDec());
                 //CheckTroppoReset(info.ResetTimes, info.ShockTimes, info.lastReStartTime);
 
 

@@ -1,4 +1,5 @@
 ﻿using CoreLibrary;
+using Lq.Log4Net;
 using MarketLibrary;
 using MarketLibrary.API.WebSocket.FCoin;
 using MarketLibrary.Model;
@@ -64,7 +65,7 @@ namespace MarketRobot
         {
             Console.WriteLine($"FCMarket_OnClosed-");
             Stop();
-            Run(SymbolList,IsWS);
+            Run(SymbolList, IsWS);
         }
         private void MarketHepler_OnMessage(object sender, MarketLibrary.API.WebSocket.FCMessageReceivedEventArgs e)
         {
@@ -136,6 +137,7 @@ namespace MarketRobot
         {
             try
             {
+                if (depth == null) return;
                 Depth oldDepth = Depthdic[symbol];
                 if (oldDepth.asks.Count == 0)
                 {
@@ -146,7 +148,7 @@ namespace MarketRobot
                     var list = new List<decimal[]>();
                     Parallel.ForEach(depth.asks, ask =>
                     {
-                        var item = oldDepth.asks.FirstOrDefault(a => a[0] == ask[0]);
+                        var item = oldDepth.asks.FirstOrDefault(a => a[0] == ask?[0]);
                         if (item != null)
                         {
                             item[1] = ask[1];
@@ -162,6 +164,7 @@ namespace MarketRobot
                     oldDepth.asks = oldDepth.asks.OrderBy(a => a[0]).ToList();
 
                 }
+                if (depth == null) return;
 
                 if (oldDepth.bids.Count == 0)
                 {
@@ -172,7 +175,7 @@ namespace MarketRobot
                     var list = new List<decimal[]>();
                     Parallel.ForEach(depth.bids, bid =>
                     {
-                        var item = oldDepth.bids.FirstOrDefault(a => a[0] == bid[0]);
+                        var item = oldDepth.bids.FirstOrDefault(a => a[0] == bid?[0]);
                         if (item != null)
                         {
                             item[1] = bid[1];
@@ -191,7 +194,9 @@ namespace MarketRobot
             }
             catch (Exception e)
             {
-                throw (e);
+                Log4NetUtility.Error("updateDepth", Utils.Exception2String(e));
+
+                //throw (e);
             }
         }
         private void updateKline(string type, Kline kline)

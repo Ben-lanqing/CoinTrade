@@ -30,6 +30,8 @@ namespace CoreLibrary
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(str) || str.Contains("html"))
+                    return default(T);
                 return JsonConvert.DeserializeObject<T>(str);
             }
             catch (Exception e)

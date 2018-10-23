@@ -30,6 +30,8 @@ namespace MarketLibrary.API.WebSocket
         string FC_WEBSOCKET_API;
         System.Timers.Timer heartBeatTimer; //
         long countConnect;
+        bool isConnning = false;
+        int reConnnetCount = 0;
 
         public event EventHandler<FCMessageReceivedEventArgs> OnMessage;
         public event EventHandler OnClosed;
@@ -47,18 +49,20 @@ namespace MarketLibrary.API.WebSocket
         {
             try
             {
-                websocket = new WebSocketSharp.WebSocket(FC_WEBSOCKET_API);
+                isConnning = true;
+                ResetSocket();
+                //websocket = new WebSocketSharp.WebSocket(FC_WEBSOCKET_API);
 
-                //websocket.OnError += (sender, e) =>
-                //{
-                //    Console.WriteLine("Error:" + e.Exception.Message.ToString());
-                //    Log4NetUtility.Debug("OnError", e.Exception.Message);
-                //};
-                websocket.OnError += Websocket_OnError;
-                websocket.OnOpen += OnOpened;
-                websocket.OnClose += Websocket_Closed; ;
-                websocket.OnMessage += ReceviedMsg;
-                websocket.ConnectAsync();
+                ////websocket.OnError += (sender, e) =>
+                ////{
+                ////    Console.WriteLine("Error:" + e.Exception.Message.ToString());
+                ////    Log4NetUtility.Debug("OnError", e.Exception.Message);
+                ////};
+                //websocket.OnError += Websocket_OnError;
+                //websocket.OnOpen += OnOpened;
+                //websocket.OnClose += Websocket_Closed; ;
+                //websocket.OnMessage += ReceviedMsg;
+                //websocket.ConnectAsync();
                 while (!websocket.IsAlive)
                 {
                     Console.WriteLine("Waiting WebSocket connnet......");
@@ -66,7 +70,6 @@ namespace MarketLibrary.API.WebSocket
                 }
                 heartBeatTimer.Elapsed += new System.Timers.ElapsedEventHandler(heatBeat);
                 //heartBeatTimer.Start();
-
             }
             catch (Exception ex)
             {
@@ -74,33 +77,49 @@ namespace MarketLibrary.API.WebSocket
                 Log4NetUtility.Error("WebSocketApi_FC", Utils.Exception2String(ex));
 
             }
+            isConnning = false;
             return true;
         }
 
-
+        private void ResetSocket()
+        {
+            websocket = new WebSocketSharp.WebSocket(FC_WEBSOCKET_API);
+            websocket.OnError += Websocket_OnError;
+            websocket.OnOpen += OnOpened;
+            websocket.OnClose += Websocket_Closed;
+            websocket.OnMessage += ReceviedMsg;
+            websocket.ConnectAsync();
+            Console.WriteLine("SetSocket !");
+        }
 
         public bool ReConnnet()
         {
             try
             {
+                isConnning = true;
                 heartBeatTimer.Close();
                 Console.WriteLine($"Websocket_Closed");
-                OnClosed?.Invoke(null, null);
-                websocket = new WebSocketSharp.WebSocket(FC_WEBSOCKET_API);
-                websocket.OnError += (sender, e) =>
-                {
-                    Console.WriteLine("Error:" + e.Exception.Message.ToString());
-                    Log4NetUtility.Debug("OnError", e.Exception.Message);
-                };
-                websocket.OnOpen += OnOpened;
-                websocket.OnClose += Websocket_Closed; ;
-                websocket.OnMessage += ReceviedMsg;
-                websocket.ConnectAsync();
+                //OnClosed?.Invoke(null, null);
+                ResetSocket();
+
                 countConnect++;
+                reConnnetCount = 0;
                 while (!websocket.IsAlive)
                 {
-                    Console.WriteLine("Waiting WebSocket ReConnnet......");
                     Thread.Sleep(1000);
+                    reConnnetCount++;
+                    if (reConnnetCount < 60 && websocket.ReadyState == WebSocketState.Connecting)
+                    {
+                        Console.WriteLine($"Waiting WebSocket ReConnnet..{reConnnetCount}....");
+                        continue;
+                    }
+                    if (reConnnetCount > 60 || websocket.ReadyState == WebSocketState.Closed || websocket.ReadyState == WebSocketState.Closing)
+                    {
+                        ResetSocket();
+                        reConnnetCount = 0;
+                        Console.WriteLine($"websocket.ReadyState: {websocket.ReadyState}");
+                        Console.WriteLine($"Waiting WebSocket ReConnnet..{reConnnetCount}....");
+                    }
                 }
                 heartBeatTimer.Elapsed += new System.Timers.ElapsedEventHandler(heatBeat);
             }
@@ -110,6 +129,7 @@ namespace MarketLibrary.API.WebSocket
                 Log4NetUtility.Error("WebSocketApi_FC", Utils.Exception2String(ex));
 
             }
+            isConnning = false;
             return true;
         }
 
@@ -126,16 +146,18 @@ namespace MarketLibrary.API.WebSocket
             Console.WriteLine("websocket.IsAlive:" + websocket.IsAlive);
             Log4NetUtility.Debug("OnError", "websocket.IsAlive:" + websocket.IsAlive);
             Log4NetUtility.Debug("OnError", e.Exception.Message);
-            websocket.Close();
+            if (!websocket.IsAlive)
+                websocket.Close();
 
         }
         private void Websocket_Closed(object sender, EventArgs e)
         {
             isOpened = false;
-
+            if (!isConnning)
+                ReConnnet();
             //heartBeatTimer.Close();
             //Console.WriteLine($"Websocket_Closed");
-            OnClosed?.Invoke(null, null);
+            //OnClosed?.Invoke(null, null);
             //websocket.ConnectAsync();
             //countConnect++;
             //while (!websocket.IsAlive)
@@ -204,7 +226,7 @@ namespace MarketLibrary.API.WebSocket
         }
         private void SendSubscribeTopic(string msg)
         {
-            if (isOpened)
+            if (isOpened && websocket.IsAlive)
             {
                 websocket.Send(msg);
                 if (!msg.Contains("ping"))
