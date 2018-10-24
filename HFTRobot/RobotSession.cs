@@ -191,8 +191,9 @@ namespace HFTRobot
 
         public void FilledSessionOrders(List<Order> filledSessionOrders, List<Order> currentOrder)
         {
+            var sessionOrders = new List<Order>(SessionOrders);
 
-            Parallel.ForEach(SessionOrders, (sessionOrder, loop) =>
+            Parallel.ForEach(sessionOrders, (sessionOrder, loop) =>
             {
                 try
                 {

@@ -138,15 +138,19 @@ namespace MarketRobot
             try
             {
                 if (depth == null) return;
+                var asks = new List<decimal[]>(depth.asks);
+                var bids = new List<decimal[]>(depth.bids);
+
                 Depth oldDepth = Depthdic[symbol];
                 if (oldDepth.asks.Count == 0)
                 {
-                    oldDepth.asks.AddRange(depth.asks);
+                    oldDepth.asks.AddRange(asks);
                 }
                 else
                 {
                     var list = new List<decimal[]>();
-                    Parallel.ForEach(depth.asks, ask =>
+
+                    Parallel.ForEach(asks, ask =>
                     {
                         var item = oldDepth.asks.FirstOrDefault(a => a[0] == ask?[0]);
                         if (item != null)
@@ -168,12 +172,12 @@ namespace MarketRobot
 
                 if (oldDepth.bids.Count == 0)
                 {
-                    oldDepth.bids.AddRange(depth.bids);
+                    oldDepth.bids.AddRange(bids);
                 }
                 else
                 {
                     var list = new List<decimal[]>();
-                    Parallel.ForEach(depth.bids, bid =>
+                    Parallel.ForEach(bids, bid =>
                     {
                         var item = oldDepth.bids.FirstOrDefault(a => a[0] == bid?[0]);
                         if (item != null)
